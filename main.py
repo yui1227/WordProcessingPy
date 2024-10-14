@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication,QMessageBox
 from UI_func import MainWindow
 import sys
 import os

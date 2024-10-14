@@ -218,10 +218,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_7.addWidget(self.label_8)
 
-        self.txtCKIPDataColumn = QLineEdit(self.tab)
-        self.txtCKIPDataColumn.setObjectName(u"txtCKIPDataColumn")
+        self.cmbCKIPDataColumn = QComboBox(self.tab)
+        self.cmbCKIPDataColumn.setObjectName(u"cmbCKIPDataColumn")
+        sizePolicy.setHeightForWidth(self.cmbCKIPDataColumn.sizePolicy().hasHeightForWidth())
+        self.cmbCKIPDataColumn.setSizePolicy(sizePolicy)
 
-        self.horizontalLayout_7.addWidget(self.txtCKIPDataColumn)
+        self.horizontalLayout_7.addWidget(self.cmbCKIPDataColumn)
 
 
         self.horizontalLayout_12.addLayout(self.horizontalLayout_7)
@@ -235,6 +237,8 @@ class Ui_MainWindow(object):
 
         self.sbTopWordCount = QSpinBox(self.tab)
         self.sbTopWordCount.setObjectName(u"sbTopWordCount")
+        sizePolicy.setHeightForWidth(self.sbTopWordCount.sizePolicy().hasHeightForWidth())
+        self.sbTopWordCount.setSizePolicy(sizePolicy)
         self.sbTopWordCount.setMinimum(1)
         self.sbTopWordCount.setMaximum(10000)
         self.sbTopWordCount.setValue(70)
