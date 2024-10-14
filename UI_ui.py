@@ -306,7 +306,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -353,6 +353,6 @@ class Ui_MainWindow(object):
         self.txtStopWord.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u8f38\u5165\u65b0\u505c\u7528\u8a5e\u5f8c\u6309Enter", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"\u8f38\u51fa\u6a94\u6848\uff1a", None))
         self.btnSaveCooccurrence.setText(QCoreApplication.translate("MainWindow", u"\u8a08\u7b97\u8a5e\u5f59\u5171\u73fe\u4e26\u5132\u5b58", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"\u8a5e\u983b\u5206\u6790", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"\u5171\u73fe\u5206\u6790", None))
     # retranslateUi
 
