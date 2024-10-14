@@ -306,14 +306,14 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"WordProcessingPy", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u6a94\u6848\uff1a", None))
         self.btnOpen.setText(QCoreApplication.translate("MainWindow", u"\u958b\u555f\u6a94\u6848", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u8f38\u51fa\u6a94\u6848\uff1a", None))
