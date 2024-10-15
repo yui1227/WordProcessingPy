@@ -174,6 +174,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setStatus(False)
 
     def closeEvent(self, event: QCloseEvent):
+        # 退出時儲存三個詞表
+        with open(self.fileList[0], mode="w", encoding="utf-8") as newf:
+            json.dump(self.longWordModel.stringList(),newf,ensure_ascii=False,indent=4)
+        with open(self.fileList[1], mode="w", encoding="utf-8") as newf:
+            json.dump(self.sameWordModel.stringList(),newf,ensure_ascii=False,indent=4)
+        with open(self.fileList[2], mode="w", encoding="utf-8") as newf:
+            json.dump(self.stopWordModel.stringList(),newf,ensure_ascii=False,indent=4)
         # 如果在斷詞就詢問
         if self.ckipThread.isRunning():
             btn = QMessageBox.question(
@@ -187,13 +194,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 event.accept()
             else:
                 event.ignore()
-        # 退出時儲存三個詞表
-        with open(self.fileList[0], mode="w", encoding="utf-8") as newf:
-            json.dump(self.longWordModel.stringList(),newf,ensure_ascii=False,indent=4)
-        with open(self.fileList[1], mode="w", encoding="utf-8") as newf:
-            json.dump(self.sameWordModel.stringList(),newf,ensure_ascii=False,indent=4)
-        with open(self.fileList[2], mode="w", encoding="utf-8") as newf:
-            json.dump(self.stopWordModel.stringList(),newf,ensure_ascii=False,indent=4)
 
     def addStopWord(self):
         stopWord = self.txtStopWord.text().strip()
