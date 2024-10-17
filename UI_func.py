@@ -1,5 +1,5 @@
 from UI_ui import Ui_MainWindow
-from PySide6.QtWidgets import QMainWindow, QFileDialog, QAbstractItemView, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QFileDialog, QAbstractItemView, QMessageBox, QTableView
 from PySide6.QtCore import QStringListModel, QModelIndex, QThread
 from PySide6.QtGui import QCloseEvent
 from WorkThread import WorkThread
@@ -7,6 +7,7 @@ import pandas as pd
 import os.path
 import json
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from DataFrameModel import DataFrameModel
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -65,6 +66,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         with open(self.fileList[2], mode="r", encoding="utf-8") as newf:
             self.stopWordModel.setStringList(json.load(newf))
         self.btnSaveCooccurrence.clicked.connect(self.saveCooccurrence)
+        self.btnPreviewCooccurrence.clicked.connect(self.previewCooccurrence)
 
     def openCKIPInputFile(self):
         openFilePath, _ = QFileDialog.getOpenFileName(
@@ -231,15 +233,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.cmbCKIPDataColumn.clear()
         self.cmbCKIPDataColumn.addItems(df_columns)
 
-    def saveCooccurrence(self):
-        saveFilePath, _ = QFileDialog.getSaveFileName(
-            self,
-            "請選擇要把斷好詞的檔案的儲存位置",
-            filter="Excel 檔案 (*.xlsx);;CSV 檔案 (*.csv)",
-        )
-        self.txtCooccurrenceFilePath.setText(saveFilePath)
-        if len(saveFilePath) == 0:
-            return
+    def getCooccurrence(self):
         # 確保斷詞結果是列表形式的字串
         documents = self.df2[self.cmbCKIPDataColumn.currentText()].apply(lambda x: " ".join(x))
 
@@ -272,8 +266,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         cooccurrence_matrix = pd.DataFrame(
             Xc.toarray(), index=features, columns=features
         )
+        return cooccurrence_matrix
+
+    def saveCooccurrence(self):
+        saveFilePath, _ = QFileDialog.getSaveFileName(
+            self,
+            "請選擇要把斷好詞的檔案的儲存位置",
+            filter="Excel 檔案 (*.xlsx);;CSV 檔案 (*.csv)",
+        )
+        self.txtCooccurrenceFilePath.setText(saveFilePath)
+        if len(saveFilePath) == 0:
+            return
+        
+        cooccurrence_matrix=self.getCooccurrence()
 
         if saveFilePath.lower().endswith(".xlsx"):
             cooccurrence_matrix.to_excel(saveFilePath)
         elif saveFilePath.lower().endswith(".csv"):
             cooccurrence_matrix.to_csv(saveFilePath)
+
+    def previewCooccurrence(self):
+        cooccurrence_matrix=self.getCooccurrence()
+        self.cooc_previwview = QTableView()
+        self.cooc_previwview.horizontalHeader().setStretchLastSection(True)
+        self.cooc_previwview.setAlternatingRowColors(False)
+        self.cooc_previwview.setSelectionBehavior(QTableView.SelectRows)
+
+        self.cooc_previwviewmodel = DataFrameModel(cooccurrence_matrix)
+        self.cooc_previwview.setModel(self.cooc_previwviewmodel)
+        self.cooc_previwview.show()
