@@ -3,3 +3,6 @@ utils/
 __pycache__/
 *.json
 data/
+build/
+dist/
+*.spec
