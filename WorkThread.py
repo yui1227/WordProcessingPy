@@ -8,7 +8,6 @@ class WorkThread(QObject):
 
     def __init__(self):
         super().__init__()
-        self.ws = WS("./data", disable_cuda=False)
 
     def setData(
         self,
@@ -71,6 +70,7 @@ class WorkThread(QObject):
     def work(self):
         # 把同義詞裡面所有的詞加到長詞列表裡，並生成長詞字典
         all_long_word_dict = self.getAllLongWords()
+        self.ws = WS("./data", disable_cuda=False)
         # 斷詞
         self.df[self.ckipOutput] = self.df[self.ckipInput].apply(
             self.ckipProcess, args=(all_long_word_dict,)
